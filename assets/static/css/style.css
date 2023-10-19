@@ -1,0 +1,152 @@
+:root {
+    --c-gray-50: #f7fafc;
+    --c-gray-100: #edf2f7;
+    --c-gray-200: #e2e8f0;
+    --c-gray-300: #cbd5e0;
+    --c-gray-400: #a0aec0;
+    --c-gray-500: #718096;
+    --c-gray-600: #4a5568;
+    --c-gray-700: #2d3748;
+    --c-gray-800: #1a202c;
+    --c-gray-900: #171923;
+    --c-text-link: #3182ce;
+    --c-text-link-visited: #805ad5;
+    --c-text-primary: #474b4b;
+    --font-family-heading: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+        sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --font-family-mono: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New";
+}
+
+
+
+body {
+    line-height: 1.5;
+    font-family: "Noto Sans JP", sans-serif;
+    color: var(--c-text-primary);
+}
+
+.container {
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.siteTitle {
+    font-size: 24px;
+}
+
+.navigations {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.navigationLink {
+    font-weight: bold;
+    text-decoration: none;
+    display: inline;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+/* footer */
+.footer {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.footerWrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.footerText {
+    color: var(-c-gray-500);
+    font-size: var(--font-size-sm);
+}
+
+
+/* md content */
+.md a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.md img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+
+.md h1 {
+    margin-top: 32px;
+    margin-bottom: 32px;
+    font-size: 1.625rem;
+    font-weight: bold;
+    font-family: var(--font-family-heading);
+}
+
+.md h2 {
+    margin-top: 32px;
+    margin-bottom: 32px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: var(--font-family-heading);
+}
+
+
+.md p {
+    line-height: 1.8;
+    white-space: no-wrap;
+    font-size: 1rem;
+}
+
+.md code {
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 2px;
+    margin: 0 4px;
+    background-color: var(--c-gray-100);
+    color: var(--c-gray-800);
+    font-family: var(--font-family-mono);
+    font-size: 0.875rem;
+    display: inline-block;
+}
+
+.md ul,
+.md ol {
+    padding-left: 1.5rem;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+
+.md li {
+    line-height: 1.8;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+
+.md li>a {
+    color: var(--c-text-link);
+
+    &:visited {
+        color: var(--c-text-link-visited);
+    }
+}
