@@ -1,6 +1,6 @@
 import type { Category, Tag } from "../types/blog";
-import { CategoryLabel } from "../components/CategoryLabel";
-import { TagLabel } from "../components/TagLabel";
+import { CategoryLabel } from "./CategoryLabel";
+import { TagLabel } from "./TagLabel";
 
 
 type Props = {

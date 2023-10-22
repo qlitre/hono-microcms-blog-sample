@@ -1,6 +1,5 @@
 import type { Tag } from "../types/blog";
 
-
 type Props = {
     tag: Tag
 }
