@@ -5,7 +5,7 @@ import { Footer } from './components/Footer'
 import { Post, Category, Tag } from './types/blog'
 import { ArticleList } from './components/ArticleList'
 import { Breadcrumbs } from './components/Breadcrumbs'
-import { Detail } from './components/ArticleDetail'
+import { ArticleDetail } from './components/ArticleDetail'
 import { Pagination } from './components/Paginations';
 
 type SiteData = {
@@ -76,7 +76,7 @@ export const HomeContent = (props: {
 export const DetailContent = (props: { siteData: SiteData, post: Post }) => (
   <Layout {...props.siteData}>
     <div class="container">
-      <Detail post={props.post}></Detail>
+      <ArticleDetail post={props.post}></ArticleDetail>
     </div>
   </Layout>
 )

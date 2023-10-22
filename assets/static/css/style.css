@@ -4,7 +4,7 @@
 @import 'components/Header.css';
 @import 'components/Footer.css';
 @import 'components/Article.css';
-@import 'components/Detail.css';
+@import 'components/ArticleDetail.css';
 @import 'components/TagInline.css';
 @import 'components/TagLabel.css';
 @import 'components/CategoryLabel.css';
