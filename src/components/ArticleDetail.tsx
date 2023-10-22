@@ -21,8 +21,8 @@ export const ArticleDetail = ({ post }: Props) => {
             <div class="md">
                 {raw(body)}
             </div>
-            <div class="ArticleArticleDetail__linkToHomeBlock">
-                <a class="ArticleArticleDetail__linkToHome" href="/">
+            <div class="ArticleDetail__linkToHomeBlock">
+                <a class="ArticleDetail__linkToHome" href="/">
                     <span>記事一覧へ</span>
                 </a>
             </div>
