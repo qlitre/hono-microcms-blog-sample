@@ -1,0 +1,24 @@
+name = "hono-microcms-blog"
+compatibility_date = "2023-01-01"
+main = "src/index.tsx"
+
+[site]
+bucket = "./assets"
+
+[vars]
+MY_VARIABLE = "production_value"
+API_KEY = "Your-microCMS-API-KEY"
+SERVICE_DOMAIN = "Your-microCMS-service-domain"
+
+#[[kv_namespaces]]
+#binding = "MY_KV_NAMESPACE"
+#id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# [[r2_buckets]]
+# binding = "MY_BUCKET"
+# bucket_name = "my-bucket"
+
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "my-database"
+# database_id = ""
