@@ -14,7 +14,7 @@
 
 .container {
     margin-top: var(--spacing-8);
-    margin-bottom: var(--spacing-16);
+    margin-bottom: var(--spacing-8);
     max-width: 960px;
     margin-left: auto;
     margin-right: auto;
@@ -84,18 +84,17 @@
     }
 }
 
-.md>pre {
+.md pre {
     margin-top: var(--spacing-8);
     margin-bottom: var(--spacing-8);
     font-size: var(--font-size-md);
     background-color: #1d1f21;
     padding: var(--spacing-4);
+    overflow-x: scroll;
 }
 
-
-
-
-.md>p>code {
+.md p code,
+li code {
     padding-left: var(--spacing-1);
     padding-right: var(--spacing-1);
     border-radius: var(--radius-sm);

@@ -1,4 +1,5 @@
 import type { MicroCMSListContent } from "microcms-js-sdk";
+import type { MicroCMSImage } from "microcms-js-sdk";
 
 export type Tag = {
     name: string;
@@ -10,6 +11,7 @@ export type Category = {
 
 export type Post = {
     title: string;
+    thumbnail: MicroCMSImage;
     description: string;
     category: Category;
     tag: Tag[];

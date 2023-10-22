@@ -34,6 +34,8 @@ app.get('/', async (c) => {
         siteData: {
             title: config.siteTitle,
             description: config.siteDescription,
+            ogpType: "website" as const,
+            ogpUrl: config.siteURL,
         },
 
     }
@@ -52,6 +54,9 @@ app.get('/post/:slug', async (c) => {
         siteData: {
             title: listDetail.title,
             description: listDetail.description,
+            ogpType: "article" as const,
+            ogpImage: listDetail.thumbnail?.url,
+            ogpUrl: config.siteURL + `post/${slug}`,
         },
     }
     return c.html(<DetailContent {...props} />)
@@ -78,6 +83,8 @@ app.get('/page/:pageId', async (c) => {
         siteData: {
             title: config.siteTitle,
             description: config.siteDescription,
+            ogpType: "website" as const,
+            ogpUrl: config.siteURL,
         },
     }
     return c.html(<HomeContent {...props} />)
@@ -115,6 +122,8 @@ app.get('/:categoryId/page/:pageId', async (c) => {
         siteData: {
             title: config.siteTitle,
             description: config.siteDescription,
+            ogpType: "website" as const,
+            ogpUrl: config.siteURL,
         },
     }
     return c.html(<HomeContent {...props} />)
@@ -135,7 +144,7 @@ app.get('/tags/:tagId/page/:pageId', async (c) => {
     const listData = await client.getList<Post>({ endpoint: 'post', queries: queries })
     const posts = listData.contents
 
-    const tagDetail = await client.getListDetail<Category>({
+    const tagDetail = await client.getListDetail<Tag>({
         endpoint: "tag",
         contentId: tagId,
     });
@@ -151,6 +160,8 @@ app.get('/tags/:tagId/page/:pageId', async (c) => {
         siteData: {
             title: config.siteTitle,
             description: config.siteDescription,
+            ogpType: "website" as const,
+            ogpUrl: config.siteURL,
         },
     }
     return c.html(<HomeContent {...props} />)

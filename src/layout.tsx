@@ -8,12 +8,13 @@ import { Breadcrumbs } from './components/Breadcrumbs'
 import { Detail } from './components/ArticleDetail'
 import { Pagination } from './components/Paginations';
 
-
-
 type SiteData = {
   title: string
   description: string
   children?: any
+  ogpType: 'website' | 'article'
+  ogpImage?: string
+  ogpUrl?: string
 }
 
 type PaginationMaterial = {
@@ -22,7 +23,6 @@ type PaginationMaterial = {
   categoryId?: string
   tagId?: string;
 }
-
 
 export const Layout = (props: SiteData) => html`<!DOCTYPE html>
 <html>
@@ -33,6 +33,18 @@ export const Layout = (props: SiteData) => html`<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="${props.description}" />
   <meta name="author" content="${config.author}" />
+  <!-- OGP -->
+  <meta property="og:title" content="${props.title}">
+  <meta property="og:description" content="${props.description}">
+  <meta property="og:url" content="${props.ogpUrl}">
+  <meta property="og:site_name" content="${config.siteTitle}">
+  <meta property="og:image" content="${props.ogpImage}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:type" content="${props.ogpType}">
+  <meta property="article:author" content="${config.twitterURL}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="${config.twitterID}">
   </head>
   <body>
     ${<Header></Header>}
@@ -40,8 +52,6 @@ export const Layout = (props: SiteData) => html`<!DOCTYPE html>
     ${<Footer></Footer>}    
   </body>
 </html>`
-
-
 
 export const HomeContent = (props: {
   siteData: SiteData,

@@ -1,5 +1,5 @@
 .Pagination__wrapper {
-    padding: 16px 0;
+    padding: var(--spacing-4) 0;
 }
 
 .Pagination__pager {

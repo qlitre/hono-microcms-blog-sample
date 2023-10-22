@@ -31,8 +31,4 @@
     &:hover {
         text-decoration: underline;
     }
-
-    @include largerThan("md") {
-        display: inline;
-    }
 }
