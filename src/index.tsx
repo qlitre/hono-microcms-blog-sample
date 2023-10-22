@@ -1,10 +1,11 @@
 import { Hono } from 'hono'
+import type { MicroCMSQueries } from 'microcms-js-sdk';
 import { serveStatic } from 'hono/cloudflare-workers'
-import { Header } from './components/Header'
-import { Footer } from './components/Footer'
-import { html, raw } from 'hono/html'
 import { createClient } from 'microcms-js-sdk'
-import { Post } from './types/blog'
+import { Post, Category, Tag } from './types/blog'
+import { HomeContent, DetailContent } from './layout'
+import { BLOG_PER_PAGE } from './settings/siteSettings';
+import { config } from './settings/siteSettings'
 
 type Bindings = {
     API_KEY: string
@@ -12,65 +13,10 @@ type Bindings = {
 }
 
 const app = new Hono<{ Bindings: Bindings }>()
+const limit = BLOG_PER_PAGE
 
 app.use('/static/*', serveStatic({ root: './' }))
 app.use('/favicon.ico', serveStatic({ path: './favicon.ico' }))
-
-
-type SiteData = {
-    title: string
-    children?: any
-}
-
-const Layout = (props: SiteData) => html`<!DOCTYPE html>
-  <html>
-    <head>
-    <meta charset="utf-8" />
-    <title>Hono microCMS Blog Sample</title>
-    <link rel="stylesheet" href="/static/css/style.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Hono microCMS Blog Sample" />
-    <meta name="author" content="Qlitre" />
-    <title>${props.title}</title>
-    </head>
-    <body>
-      ${<Header></Header>}
-      ${props.children}
-      ${<Footer></Footer>}
-    </body>
-  </html>`
-
-const Content = (props: { siteData: SiteData, posts: Post[] }) => (
-    <body>
-        <div class="container">
-            <Layout {...props.siteData}>
-                {props.posts.map((post) => (
-                    <div key={post.title}>
-                        <h1>{post.title}</h1>
-                        <a href={`/${post.id}`}>つづきをみる</a>
-                    </div>
-                ))}
-            </Layout>
-        </div>
-    </body>
-)
-
-const DetailContent = (props: { siteData: SiteData, post: Post }) => (
-    <body>
-        <div class="container">
-            <Layout {...props.siteData}>
-                <div>
-                    <h1>{props.post.title}</h1>
-                    <div class="md">
-                        {raw(props.post.text)}
-                    </div>
-                    <a href="/">TOPへ</a>
-                </div>
-            </Layout>
-        </div>
-    </body>
-)
-
 
 app.get('/', async (c) => {
     const client = createClient({
@@ -81,27 +27,134 @@ app.get('/', async (c) => {
     const posts = listData.contents
     const props = {
         posts: posts,
-        siteData: {
-            title: 'Hono microCMS blog sample',
+        paginationMaterial: {
+            totalCount: listData.totalCount,
+            currentPage: 1,
         },
+        siteData: {
+            title: config.siteTitle,
+            description: config.siteDescription,
+        },
+
     }
-    return c.html(<Content {...props} />)
+    return c.html(<HomeContent {...props} />)
 })
 
-app.get('/:id', async (c) => {
-    const id = c.req.param('id')
+app.get('/post/:slug', async (c) => {
+    const slug = c.req.param('slug')
     const client = createClient({
         serviceDomain: c.env.SERVICE_DOMAIN,
         apiKey: c.env.API_KEY,
     })
-    const listDetail = await client.getListDetail<Post>({ endpoint: 'post', contentId: id })
+    const listDetail = await client.getListDetail<Post>({ endpoint: 'post', contentId: slug })
     const props = {
         post: listDetail,
         siteData: {
             title: listDetail.title,
+            description: listDetail.description,
         },
     }
     return c.html(<DetailContent {...props} />)
 })
+
+app.get('/page/:pageId', async (c) => {
+    const pageId = c.req.param('pageId')
+    const client = createClient({
+        serviceDomain: c.env.SERVICE_DOMAIN,
+        apiKey: c.env.API_KEY,
+    })
+    const queries: MicroCMSQueries = {
+        offset: (Number(pageId) - 1) * limit,
+        limit: limit
+    }
+    const listData = await client.getList<Post>({ endpoint: 'post', queries: queries })
+    const posts = listData.contents
+    const props = {
+        posts: posts,
+        paginationMaterial: {
+            totalCount: listData.totalCount,
+            currentPage: Number(pageId),
+        },
+        siteData: {
+            title: config.siteTitle,
+            description: config.siteDescription,
+        },
+    }
+    return c.html(<HomeContent {...props} />)
+})
+
+
+app.get('/:categoryId/page/:pageId', async (c) => {
+    const categoryId = c.req.param('categoryId')
+    const pageId = c.req.param('pageId')
+    const client = createClient({
+        serviceDomain: c.env.SERVICE_DOMAIN,
+        apiKey: c.env.API_KEY,
+    })
+    const queries: MicroCMSQueries = {
+        filters: `category[equals]${categoryId}`,
+        offset: (Number(pageId) - 1) * limit,
+        limit: limit
+    }
+    const listData = await client.getList<Post>({ endpoint: 'post', queries: queries })
+    const posts = listData.contents
+
+    const categoryDetail = await client.getListDetail<Category>({
+        endpoint: "category",
+        contentId: categoryId,
+    });
+
+    const props = {
+        posts: posts,
+        paginationMaterial: {
+            totalCount: listData.totalCount,
+            currentPage: Number(pageId),
+            categoryId: categoryId,
+        },
+        category: categoryDetail,
+        siteData: {
+            title: config.siteTitle,
+            description: config.siteDescription,
+        },
+    }
+    return c.html(<HomeContent {...props} />)
+})
+
+app.get('/tags/:tagId/page/:pageId', async (c) => {
+    const tagId = c.req.param('tagId')
+    const pageId = c.req.param('pageId')
+    const client = createClient({
+        serviceDomain: c.env.SERVICE_DOMAIN,
+        apiKey: c.env.API_KEY,
+    })
+    const queries: MicroCMSQueries = {
+        filters: `tag[contains]${tagId}`,
+        offset: (Number(pageId) - 1) * limit,
+        limit: limit
+    }
+    const listData = await client.getList<Post>({ endpoint: 'post', queries: queries })
+    const posts = listData.contents
+
+    const tagDetail = await client.getListDetail<Category>({
+        endpoint: "tag",
+        contentId: tagId,
+    });
+
+    const props = {
+        posts: posts,
+        tag: tagDetail,
+        paginationMaterial: {
+            totalCount: listData.totalCount,
+            currentPage: Number(pageId),
+            tagId: tagId,
+        },
+        siteData: {
+            title: config.siteTitle,
+            description: config.siteDescription,
+        },
+    }
+    return c.html(<HomeContent {...props} />)
+})
+
 
 export default app
