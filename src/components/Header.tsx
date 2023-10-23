@@ -11,8 +11,8 @@ export const Header = () => {
                         </a>
                     </h1>
                     <nav class="Header__navigations">
-                        <a class="Header__navigationLink" href={config.repos}>GitHub</a>
-                        <a class="Header__navigationLink" href={config.about}>About</a>
+                        <a class="Header__navigationLink" href={config.repos} target="_blank" rel="noopener noreferrer">GitHub</a>
+                        <a class="Header__navigationLink" href={config.about} target="_blank" rel="noopener noreferrer">About</a>
                     </nav>
                 </header>
             </div>

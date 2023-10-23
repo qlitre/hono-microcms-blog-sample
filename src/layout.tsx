@@ -44,7 +44,7 @@ export const Layout = (props: SiteData) => html`<!DOCTYPE html>
   <meta property="og:type" content="${props.ogpType}">
   <meta property="article:author" content="${config.twitterURL}">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:creator" content="${config.twitterID}">
+  <meta name="twitter:creator" content="@${config.twitterID}">
   </head>
   <body>
     ${<Header></Header>}

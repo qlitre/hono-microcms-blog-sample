@@ -4,7 +4,8 @@ export const BLOG_PER_PAGE = 5
 export const config = {
     // Headerなどに表示
     siteTitle: 'Hono microCMS Blog',
-    siteURL: 'https://hono-microcms-blog.qlitre.workers.dev/',
+    // スラッシュは最後にいれない
+    siteURL: 'https://hono-microcms-blog.qlitre.workers.dev',
     // footer、meta descriptionに表示
     author: 'qlitre',
     // meta descriptionに表示
@@ -14,5 +15,6 @@ export const config = {
     // Aboutページのリンク
     about: 'https://qlitre.me',
     twitterURL: 'https://twitter.com/kuri_tter',
-    twitterID: '@kuri_tter',
+    // @はいれない
+    twitterID: 'kuri_tter',
 }

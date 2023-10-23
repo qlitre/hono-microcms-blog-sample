@@ -56,7 +56,7 @@ app.get('/post/:slug', async (c) => {
             description: listDetail.description,
             ogpType: "article" as const,
             ogpImage: listDetail.thumbnail?.url,
-            ogpUrl: config.siteURL + `post/${slug}`,
+            ogpUrl: config.siteURL + `/post/${slug}`,
         },
     }
     return c.html(<DetailContent {...props} />)

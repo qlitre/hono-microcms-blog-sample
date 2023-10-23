@@ -3,6 +3,7 @@ import { raw } from 'hono/html'
 import { getHighlightBody } from '../utils/getHighlightBody';
 import { LineDevider } from './LineDivider';
 import { TagInline } from './TagInline';
+import { ShareX } from './ShareX';
 import { jstDatetime } from '../utils/jstDatetime';
 
 type Props = {
@@ -20,6 +21,9 @@ export const ArticleDetail = ({ post }: Props) => {
             <LineDevider />
             <div class="md">
                 {raw(body)}
+            </div>
+            <div>
+                <ShareX slug={post.id} title={post.title} />
             </div>
             <div class="ArticleDetail__linkToHomeBlock">
                 <a class="ArticleDetail__linkToHome" href="/">

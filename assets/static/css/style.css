@@ -11,6 +11,7 @@
 @import 'components/Breadcrumbs.css';
 @import 'components/Pagination.css';
 @import 'components/LineDevider.css';
+@import 'components/ShareX.css';
 
 .container {
     margin-top: var(--spacing-8);
